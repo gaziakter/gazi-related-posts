@@ -16,3 +16,20 @@
     exit; // Exit if accessed directly
 }
 
+// Main Class
+class Gazi_post_related{
+
+    //construct function for hook
+    public function __construct(){
+        add_action( 'init', array($this, 'gazi_load_textdomain') );
+
+    }
+
+    // textdomain funciton
+    function gazi_load_textdomain() {
+        load_theme_textdomain( 'gazi-post', plugin_dir_path( __FILE__ ) . '/languages' );
+    }
+
+}
+
+new Gazi_post_related();
