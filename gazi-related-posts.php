@@ -17,7 +17,7 @@
 }
 
 // Main Class
-class Gazi_post_related{
+class Gazi_related_post{
 
     //construct function for hook
     public function __construct(){
@@ -48,12 +48,15 @@ class Gazi_post_related{
             
             //Loop
             if ($related_posts_query->have_posts()) {
-                $related_posts_content = '<div class="related-posts"><h2>Related Posts</h2><ul>';
+                $related_posts_content = '<div class="related-posts"><h2>'. __( 'Related Posts', 'gazi-post' ) .'</h2>';
                 while ($related_posts_query->have_posts()) {
                     $related_posts_query->the_post();
-                    $related_posts_content .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a></li>';
+                    $related_posts_content .= '<div class="post-content-area">';
+                    $related_posts_content .= get_the_post_thumbnail();
+                    $related_posts_content .= '<h2 class="post-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
+                    $related_posts_content .= '</div>';
                 }
-                $related_posts_content .= '</ul></div>';
+                $related_posts_content .= '</div>';
                 wp_reset_postdata();
 
                 // Append related posts content to the main content
@@ -65,4 +68,4 @@ class Gazi_post_related{
     }
 }
 
-new Gazi_post_related();
+new Gazi_related_post();
