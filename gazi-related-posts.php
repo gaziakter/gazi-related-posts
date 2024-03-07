@@ -46,6 +46,7 @@ class Gazi_post_related{
             // The Query.
             $related_posts_query = new WP_Query( $args );
             
+            //Loop
             if ($related_posts_query->have_posts()) {
                 $related_posts_content = '<div class="related-posts"><h2>Related Posts</h2><ul>';
                 while ($related_posts_query->have_posts()) {
@@ -58,18 +59,9 @@ class Gazi_post_related{
                 // Append related posts content to the main content
                 $content .= $related_posts_content;
             }
-
-
-            return $content;
-
             
-
+            return $content;
         }
-
-
-
-        
-    //     //return $content . esc_html__( 'I’m filtering the content inside the main loop', 'wporg');
     }
 }
 
