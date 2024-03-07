@@ -22,6 +22,7 @@ class Gazi_related_post{
     //construct function for hook
     public function __construct(){
         add_action( 'init', array($this, 'gazi_load_textdomain') );
+        add_action( 'wp_enqueue_scripts', array($this, 'gazi_wp_enqueue_style') );
         add_filter( 'the_content', array($this, 'gazi_show_related_post'));
 
     }
@@ -29,6 +30,13 @@ class Gazi_related_post{
     // textdomain funciton
     public function gazi_load_textdomain() {
         load_theme_textdomain( 'gazi-post', plugin_dir_path( __FILE__ ) . '/languages' );
+    }
+
+    // Enqueue Style
+    public function gazi_wp_enqueue_style(){
+        wp_enqueue_style( 'plugin-style', plugin_dir_url( __FILE__ ) . "assets/css/plugin-style.css", null, time() );
+
+
     }
 
     //show related posts
@@ -48,15 +56,15 @@ class Gazi_related_post{
             
             //Loop
             if ($related_posts_query->have_posts()) {
-                $related_posts_content = '<div class="related-posts"><h2>'. __( 'Related Posts', 'gazi-post' ) .'</h2>';
+                $related_posts_content = '<div class="related-posts"><h2>'. __( 'Related Posts', 'gazi-post' ) .'</h2><div class="blog-container"> ';
                 while ($related_posts_query->have_posts()) {
                     $related_posts_query->the_post();
-                    $related_posts_content .= '<div class="post-content-area">';
+                    $related_posts_content .= '<div class="blog-item">';
                     $related_posts_content .= get_the_post_thumbnail();
                     $related_posts_content .= '<h2 class="post-title"><a href="' . get_permalink() . '">' . get_the_title() . '</a></h2>';
                     $related_posts_content .= '</div>';
                 }
-                $related_posts_content .= '</div>';
+                $related_posts_content .= '</div></div>';
                 wp_reset_postdata();
 
                 // Append related posts content to the main content
